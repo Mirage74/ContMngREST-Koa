@@ -1,29 +1,28 @@
-
 const mongoose = require('mongoose');
 
-// uniqueValidator validation is not atomic! unsafe!
+
 const userSchema = new mongoose.Schema({
   id: {
     type: String,
-    unique: "Такой -id- существует"
+    unique: "this id already exist !"
 
       },
   name: {
     type: String,
-    unique: "Такой -name- существует"
+    unique: "this name already exist !"
   },
   email: {
     type: String,
-    required: "E-mail пользователя не должен быть пустым.",
+    required: "E-mail can't be empty",
     validate: [
       {
         validator(value) {
           return /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value);
         },
-        msg:       'Некорректный email.'
+        msg:       'incorrect email.'
       }
     ],
-    unique: "Такой EMAIL уже существует"
+    unique: "this EMAIL already exist"
   },
   phone: {
     type: String
@@ -34,7 +33,6 @@ const userSchema = new mongoose.Schema({
   /* @see mongoose
   toObject: {
     transform(doc, ret) {
-      // remove the __v of every document before returning the result
       delete ret.__v;
       return ret;
     }
